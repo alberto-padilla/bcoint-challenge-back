@@ -1,6 +1,6 @@
-package cl.binter.challenge.backendapadilla.wordcounter.utils;
+package cl.binter.challenge.bcointchallengeback.wordcounter.utils;
 
-import cl.binter.challenge.backendapadilla.wordcounter.domain.RankingItem;
+import cl.binter.challenge.bcointchallengeback.wordcounter.domain.RankingItem;
 
 import java.util.Comparator;
 

@@ -1,11 +1,12 @@
-package cl.binter.challenge.backendapadilla.wordcounter.service.impl;
+package cl.binter.challenge.bcointchallengeback.wordcounter.service.impl;
 
-import cl.binter.challenge.backendapadilla.wordcounter.domain.TextComplete;
-import cl.binter.challenge.backendapadilla.wordcounter.model.TextItem;
-import cl.binter.challenge.backendapadilla.wordcounter.domain.Ranking;
-import cl.binter.challenge.backendapadilla.wordcounter.domain.RankingItem;
-import cl.binter.challenge.backendapadilla.wordcounter.service.TextService;
-import cl.binter.challenge.backendapadilla.wordcounter.utils.RankingItemComparator;
+import cl.binter.challenge.bcointchallengeback.wordcounter.domain.TextComplete;
+import cl.binter.challenge.bcointchallengeback.wordcounter.model.TextItem;
+import cl.binter.challenge.bcointchallengeback.wordcounter.domain.Ranking;
+import cl.binter.challenge.bcointchallengeback.wordcounter.domain.RankingItem;
+import cl.binter.challenge.bcointchallengeback.wordcounter.service.TextService;
+import cl.binter.challenge.bcointchallengeback.wordcounter.utils.RankingItemComparator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,8 +15,15 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+
 @Service
 public class TextServiceImpl implements TextService {
+
+    @Value("${api.generator.wordcounter.path}")
+    private String API_GENERATOR_WORDCOUNTER_PATH;
+
+    @Value("${api.generator.wordcounter.resource.text.path}")
+    private String API_GENERATOR_WORDCOUNTER_RESOURCE_TEXT_PATH;
 
     private final RestTemplate restTemplate;
 
@@ -25,21 +33,21 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public Optional<TextItem> getText() {
-        String resourceUrl = "http://localhost:8080/generator/word-counter/text";
+        String resourceUrl = API_GENERATOR_WORDCOUNTER_PATH + API_GENERATOR_WORDCOUNTER_RESOURCE_TEXT_PATH;
         ResponseEntity<TextItem> responseEntity = restTemplate.getForEntity(resourceUrl, TextItem.class);
         return Optional.ofNullable(responseEntity.getBody());
     }
 
     @Override
     public Optional<TextItem> getText(Integer id) {
-        String resourceUrl = "http://localhost:8080/generator/word-counter/text?id=" + id + "&page=" + 1;
+        String resourceUrl = API_GENERATOR_WORDCOUNTER_PATH + API_GENERATOR_WORDCOUNTER_RESOURCE_TEXT_PATH + "?id=" + id + "&page=" + 1;
         ResponseEntity<TextItem> responseEntity = restTemplate.getForEntity(resourceUrl, TextItem.class);
         return Optional.ofNullable(responseEntity.getBody());
     }
 
     @Override
     public Optional<TextItem> getText(Integer id, Integer page) {
-        String resourceUrl = "http://localhost:8080/generator/word-counter/text?id=" + id + "&page=" + page;
+        String resourceUrl = API_GENERATOR_WORDCOUNTER_PATH + API_GENERATOR_WORDCOUNTER_RESOURCE_TEXT_PATH + "?id=" + id + "&page=" + page;
         ResponseEntity<TextItem> responseEntity = restTemplate.getForEntity(resourceUrl, TextItem.class);
         return Optional.ofNullable(responseEntity.getBody());
     }

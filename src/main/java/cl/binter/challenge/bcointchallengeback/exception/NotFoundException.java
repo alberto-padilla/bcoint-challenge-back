@@ -1,4 +1,4 @@
-package cl.binter.challenge.backendapadilla.exception;
+package cl.binter.challenge.bcointchallengeback.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -7,9 +7,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NotFoundException extends RuntimeException{
 
     public NotFoundException() {
-    }
-
-    public NotFoundException(String message){
-        super(message);
     }
 }

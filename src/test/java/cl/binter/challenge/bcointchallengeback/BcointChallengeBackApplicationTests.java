@@ -1,10 +1,10 @@
-package cl.binter.challenge.backendapadilla;
+package cl.binter.challenge.bcointchallengeback;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApadillaApplicationTests {
+class BcointChallengeBackApplicationTests {
 
 	@Test
 	void contextLoads() {
