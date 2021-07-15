@@ -1,5 +1,7 @@
 package cl.binter.challenge.bcointchallengeback.wordcounter.service.impl;
 
+import cl.binter.challenge.bcointchallengeback.wordcounter.domain.Ranking;
+import cl.binter.challenge.bcointchallengeback.wordcounter.domain.TextComplete;
 import cl.binter.challenge.bcointchallengeback.wordcounter.model.TextItem;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,19 +44,28 @@ public class WordCounterServiceImplTest {
     }
 
     @Test
-    public void whenGetRandomTextReturnTheSame() {
+    public void whenGetTextReturnTheSame() {
         assertEquals(Optional.of(randomText), wordCounterService.getText());
-
+        assertEquals(Optional.of(randomText), wordCounterService.getText(1));
+        assertEquals(Optional.of(randomText), wordCounterService.getText(1, 1));
     }
 
     @Test
-    public void whenGetCompleteTextThenRecib() {
-        when(restTemplate.getForEntity(
-                Mockito.anyString(), Mockito.any()))
-                .thenReturn(new ResponseEntity<>(randomText, HttpStatus.OK));
+    public void whenGetCompleteTextThenConcatenateText() {
+        TextComplete textComplete = wordCounterService.getTextComplete(wordCounterService.getText().get());
+        assertEquals(randomText.getText().concat(randomText.getText()), textComplete.getText());
     }
 
     @Test
-    public void getRanking() {
+    public void WhenGeneratingRankingMostOccurrencesWordGoesFirst() {
+        TextComplete textComplete = TextComplete.builder()
+                .id(1)
+                .title("")
+                .text("uno dos dos tres tres tres")
+                .build();
+        Ranking ranking = wordCounterService.getRanking(textComplete);
+        assertEquals("tres", ranking.getRanking().get(0).getWord());
+        assertEquals("dos", ranking.getRanking().get(1).getWord());
+        assertEquals("uno", ranking.getRanking().get(2).getWord());
     }
 }
